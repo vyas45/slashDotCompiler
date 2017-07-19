@@ -1,2 +1,3 @@
-# slashDotCompiler
-A tiny C compiler 
+# tiny C Interpreter
+A tiny C interpreter
+
