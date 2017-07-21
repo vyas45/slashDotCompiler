@@ -1,0 +1,39 @@
+There are 3 main components to a computing system:
+
+1. CPU
+2. Registers
+3. Memory
+
+Code(or assembly instructions) are stored inside the "Memory" as binary data and "CPU" picks out these instructions one by one from memory to execute them; the running states of the system are stored in the "Registers"
+
+
+1. Memory:
+   ======
+
+    Memory can be used to store either code(assembly instructions) or data(user data). Everything is stored in binary. Modern operating systems have the concept of virtual memory in which each program only needs to care about virtual memory and there are translations to the actual physical memory. The advantage of virtual memory is that it can hide the details of a physical memory from the programs. For example, in 32bit machine, all the available memory address is 2^32 = 4G while the actaul physical memory may be only 256M. The program will still think that it can have 4G memory to use, the OS will map them to physical ones.
+
+Each program's usable memory is partitioned into several segments:
+
+1. text segment : this stores code(instructions)
+2. data segment : this stores initialized data (int i = 10)
+3. bss  segment : this stores un-initialized data. (int i[1000])
+4. stack segment : handles the state of function calls (caling frames/local variables)
+5. heap segment : dynamic allocations for a program are held here
+
+
++------------------+
+|    stack   |     |      high address
+|    ...     v     |
+|                  |
+|                  |
+|                  |
+|                  |
+|    ...     ^     |
+|    heap    |     |
++------------------+
+| bss  segment     |
++------------------+
+| data segment     |
++------------------+
+| text segment     |      low address
++------------------+
