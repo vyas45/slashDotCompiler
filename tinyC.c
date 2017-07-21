@@ -19,8 +19,34 @@
 #include <memory.h>
 #include <string.h>
 
+/* Maintaining some global state of the system */
+int token; //Current token
+char *src, *old_src; //Pointer to the source code buffer
+int poolsize; //Size of text/data/stack
+int line; //line number
 
-int main() {
+/* Get the next token */
+void next() {
+    token = *(src++); //move to the next token on source
+    return;
+}
+
+/* Parser */
+void program() {
+    next(); //get the next token
+    while(token > 0) {
+        printf("The token is: %c\n", token);
+        next();
+    }
+}
+
+/* Code-spitter - VM functionality */
+int eval() {
+    /* TBD */
+    return 0;
+}
+
+int main(int argc, char **argv) {
     int i, fd;
 
     argc--;
@@ -47,3 +73,19 @@ int main() {
         printf("read() returned %d\n", i);
         return -1;
     }
+    src[i] = 0; //End of File Character
+    close(fd); //Close the file
+    
+    /* Invoke the parser
+     * So we have read the entire file into a buffer
+     * now we can invoke the parser to go over it and
+     * parse the tokens to convert them to AST
+     */ 
+    program();
+
+    /*
+     * This is the code-gen functionality and is going
+     * to generate code on the VM
+     */
+    return eval();
+}

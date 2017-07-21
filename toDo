@@ -1,2 +1,11 @@
-* Move the file handling from open() to fopen()o
+Technica Debt:
+==============
+
+* Move the file handling from open() to fopen()
 * Pool size allocation for the source
+
+Nice-to-have:
+=============
+
+* REPL for C
+* Full fledged lexer/parser
