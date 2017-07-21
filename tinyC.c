@@ -25,6 +25,12 @@ char *src, *old_src; //Pointer to the source code buffer
 int poolsize; //Size of text/data/stack
 int line; //line number
 
+/* Memory segments for the program */
+int *text;      //text segment
+int *old_text;  //to dump text segment 
+int *stack;     //stack
+char *data;     //data segment (going to be storing string literals only)
+
 /* Get the next token */
 void next() {
     token = *(src++); //move to the next token on source
@@ -75,7 +81,23 @@ int main(int argc, char **argv) {
     }
     src[i] = 0; //End of File Character
     close(fd); //Close the file
-    
+   
+    /*
+     * Allocate memory for the VM
+     */ 
+    if (!(data = malloc(poolsize))) {
+	printf("could not malloc(%d) for data area\n", poolsize);
+	return -1;
+    }
+    if (!(stack = malloc(poolsize))) {
+	printf("could not malloc(%d) for stack area\n", poolsize);
+	return -1;
+    }
+
+    memset(text, 0, poolsize);
+    memset(data, 0, poolsize);
+    memset(stack, 0, poolsize);
+
     /* Invoke the parser
      * So we have read the entire file into a buffer
      * now we can invoke the parser to go over it and
