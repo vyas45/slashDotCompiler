@@ -31,6 +31,14 @@ int *old_text;  //to dump text segment
 int *stack;     //stack
 char *data;     //data segment (going to be storing string literals only)
 
+/* VM Registers */
+int *pc, *bp, *sp, ax, cycle; 
+
+/* Instruction Set */
+enum { LEA ,IMM ,JMP ,CALL ,JZ ,JNZ ,ENT ,ADJ ,LEV ,LI ,LC ,SI ,SC ,PUSH,
+    OR ,XOR ,AND ,EQ ,NE ,LT ,GT ,LE ,GE ,SHL ,SHR ,ADD ,SUB ,MUL ,DIV ,MOD ,
+    OPEN ,READ ,CLOS ,PRTF ,MALC ,MSET ,MCMP ,EXIT };
+
 /* Get the next token */
 void next() {
     token = *(src++); //move to the next token on source
@@ -48,7 +56,15 @@ void program() {
 
 /* Code-spitter - VM functionality */
 int eval() {
-    /* TBD */
+    int op, *tmp;
+    while(1) {
+	if (op == IMM)       {ax = *pc++;}                 // load immediate value to ax
+	else if (op == LC)   {ax = *(char *)ax;}           // load character to ax, address in ax
+	else if (op == LI)   {ax = *(int *)ax;}            // load integer to ax, address in ax
+	else if (op == SC)   {ax = *(char *)*sp++ = ax;}   // save character to address, value in ax, address on stack
+	else if (op == SI)   {*(int *)*sp++ = ax;}         // save integer to address, value in ax, address on stack
+
+    }
     return 0;
 }
 
@@ -97,6 +113,10 @@ int main(int argc, char **argv) {
     memset(text, 0, poolsize);
     memset(data, 0, poolsize);
     memset(stack, 0, poolsize);
+
+    /* Register initialization */
+    bp = sp = (int *)((int)stack + poolsize); //Point to the greatest address and then move down
+    ax = 0;
 
     /* Invoke the parser
      * So we have read the entire file into a buffer

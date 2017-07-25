@@ -9,3 +9,4 @@ Nice-to-have:
 
 * REPL for C
 * Full fledged lexer/parser
+* MOV instruction in standard x86 Intel style
