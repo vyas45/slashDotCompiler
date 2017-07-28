@@ -86,7 +86,11 @@ As we have only one general purpose register (AX) and it is difficult to determi
     else if (op == SI)   {*(int *)*sp++ = ax;}           // save integer to address, value in ax, address on stack
 
 
+2. PUSH:
+   =====
+   On x86 PUSH can move an immediate value or a register value onto the stack. In here we only move from "AX" to the stack. 
 
+  else if (op == PUSH) {*--sp = ax;}
 
 
 

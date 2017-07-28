@@ -63,6 +63,7 @@ int eval() {
 	else if (op == LI)   {ax = *(int *)ax;}            // load integer to ax, address in ax
 	else if (op == SC)   {ax = *(char *)*sp++ = ax;}   // save character to address, value in ax, address on stack
 	else if (op == SI)   {*(int *)*sp++ = ax;}         // save integer to address, value in ax, address on stack
+  else if (op == PUSH) {*--sp = ax;}                 // push the value of ax onto the stack
 
     }
     return 0;
